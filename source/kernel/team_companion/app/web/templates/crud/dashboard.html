@@ -1,0 +1,49 @@
+{% extends "index.html" %}
+
+{% import "macros/buttons.html" as btn with context %}
+{% import "macros/cards.html" as card with context %}
+
+{% block main_content %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" role="alert">
+                    {{ btn.button(label="x", class="close", data_dismiss="alert") }}
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% call card.with_body(extra_styles='text-right') %}
+        <div class="btn-group pull-right">
+            {{ btn.link_button(label='Agregar', icon='fas fa-plus', style='primary', href=url_for(add_button_route)) }}
+        </div>
+    {% endcall %}
+    {% block table_wrapper %}{% endblock %}
+{% endblock %}
+
+{% block generic_scripts %}
+    <script src="{{ url_for("static", filename="sb-admin-6.0.2/js/jquery.dataTables-1.10.20.min.js") }}" ></script>
+    <script src="{{ url_for("static", filename="sb-admin-6.0.2/js/dataTables-1.10.20.bootstrap4.min.js") }}" ></script>
+    <script>
+        $(document).ready(function() {
+            $('#dataTable_{{ section_name }}').dataTable({
+                "paging":    true,
+                "ordering":  true,
+                "info":      true,
+                "searching": true});});
+
+        function delete_element(target_route, element_field_id, element_row) {
+            if (confirm('¿Está seguro que desea eliminar el elemento seleccionado?')) {
+                $.post(target_route, {
+                    element_id: $(element_field_id).text()
+                }).done(function(response) {
+                    $('#dataTable_{{ section_name }}').dataTable().api().row(element_row).remove().draw()
+                }).fail(function() {
+                    alert('No se ha podido eliminar el elemento. Puede que el objeto que se intenta eliminar esté en uso.')
+                });
+            } else {
+                // do nothing
+            }}
+    </script>
+{% endblock %}

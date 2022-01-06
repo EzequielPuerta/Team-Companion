@@ -1,0 +1,22 @@
+{% extends "crud/dashboard.html" %}
+
+{% import "macros/tables.html" as table %}
+
+{% set active_sections = ['Usuarios'] %}
+{% set breadcrumbs = [('Dashboard','main.dashboard')] %}
+{% set add_button_route = 'internal_user.add' %}
+{% set columns = ['ID', 'Nombre', 'Última conexión', 'Administrador', 'Modificar', 'Eliminar'] %}
+
+{% block table_wrapper %}
+    {% call(user) table.populate(name='Usuarios registrados', rows=internal_users, row_id='internal_user',
+        columns=columns, table_id=section_name) %}
+            {{ table.cell(user.id, id='internal_user_id_'~user.id) }}
+            {{ table.cell(user.username) }}
+            {{ table.cell(user.last_connection | formatted_timestamp) }}
+            {{ table.cell(user.is_admin | formatted_boolean) }}
+            {{ table.modify_button('internal_user', user.id, style='primary') }}
+            {{ table.delete_button('internal_user', user.id, style='danger') }}
+    {% endcall %}
+{% endblock %}
+
+{% block extra_scripts %}{% endblock %}

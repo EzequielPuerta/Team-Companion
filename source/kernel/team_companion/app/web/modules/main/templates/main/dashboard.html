@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+
+{% set active_sections = ["Dashboard"] %}
+{% set breadcrumbs = [] %}
+
+{% import "macros/cards.html" as card with context %}
+
+{% block main_content %}
+    {% for parameter in parameters %}
+        {% call card.header_and_body(title=parameter~" (largo: "~parameter|length~")") %}
+            <div class="row">
+                {# <div class="col-xl-3 col-md-6">
+                    {{ card.primary(contents="Primary", body_icon="fas fa-plug", footer_text="Ver detalles", footer_link_path="#") }}
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    {{ card.warning(contents='Warning', text_color='black', body_icon='far fa-clock', footer_text='Ver detalles', footer_link_path='#') }}
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    {{ card.success(contents='Success', body_icon='far fa-lightbulb', footer_text='Ver detalles', footer_link_path='#') }}
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    {{ card.danger(contents='Danger', body_icon='fas fa-exclamation-triangle', footer_text='Ver detalles', footer_link_path='#') }}
+                </div> #}
+            </div>
+        {% endcall %}
+    {% endfor %}
+{% endblock %}

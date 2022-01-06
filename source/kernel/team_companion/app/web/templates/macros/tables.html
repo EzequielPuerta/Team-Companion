@@ -1,0 +1,57 @@
+{% import "macros/buttons.html" as btn with context %}
+{% import "macros/cards.html" as card with context %}
+{% import "macros/tools.html" as tools with context %}
+
+{% macro cell(content) %}
+    <td {{ tools.expand(**kwargs) }}>{{ content }}</td>
+{% endmacro %}
+
+{% macro modify_button(element_type, element_id, style='primary', is_disabled=false) %}
+    {{ cell(
+        btn.link_button(
+            icon='fas fa-exchange-alt',
+            style=style,
+            is_disabled=is_disabled,
+            id='modify_'~element_type~'_'~element_id,
+            href=url_for(element_type~'.modify', id=element_id),
+            **kwargs),
+        style='width:5%;') }}
+{% endmacro %}
+
+{% macro delete_button(element_type, element_id, style='primary', is_disabled=false) %}
+    {% set url = url_for(element_type~'.delete') %}
+    {% set element_field_id = "#"~element_type~"_id_"~element_id %}
+    {% set element_row = "#"~element_type~"_"~element_id %}
+    {% set js_link = "javascript:delete_element('"~url~"','"~element_field_id~"','"~element_row~"');" %}
+    {{ cell(
+        btn.link_button(
+            icon='fas fa-trash',
+            style=style,
+            is_disabled=is_disabled,
+            id='delete_'~element_type~'_'~element_id,
+            href=js_link,
+            **kwargs),
+        style='width:5%;') }}
+{% endmacro %}
+
+{% macro populate(name='', rows=[], columns=[], row_id='', table_id='', width="100%") %}
+    {% set populate_contents = caller %}
+    {% call card.generic(title=name, header_icon='fas fa-table mr-1') %}
+        <div class="table-responsive">
+            <table class="table table-bordered hover order-column row-border stripe" id="dataTable_{{ table_id }}" width={{ width }} cellspacing="0">
+                <thead>
+                    <tr>
+                    {% for column in columns %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                        <tr {{ "id="~row_id~"_"~row.id if row_id != "" }}>{{ populate_contents(row) }}</tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endcall %}
+{% endmacro %}

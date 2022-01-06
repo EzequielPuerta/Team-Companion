@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% import "macros/navbar.html" as navbar with context %}
+{% import "macros/sidenav.html" as sidenav with context %}
+{% import "macros/footer.html" as footer with context %}
+
+{% set section_action = active_sections[-1] %}
+
+{% if breadcrumbs is defined and breadcrumbs | length > 1 %}
+    {% set section_name = (active_sections[0]|replace(' ', '_')) %}
+    {% set previous_section = breadcrumbs[-1][1] %}
+    {% set previous_section_name = breadcrumbs[-1][0] %}
+{% else %}
+    {% set section_name = (active_sections[0]|replace(' ', '_')) %}
+    {% set previous_section = 'main.dashboard' %}
+    {% set previous_section_name = 'Dashboard' %}
+{% endif %}
+
+{% block head_links %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="sb-admin-6.0.2/css/styles.css") }}" />
+{% endblock %}
+
+{% block content %}
+    {{ navbar.render() }}
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            {{ sidenav.render() }}
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid">
+                    <h1 class="mt-4">{{ section_action }}</h1>
+                    <ol class="breadcrumb mb-4">
+                        {% for breadcrumb, route in breadcrumbs %}
+                            <li class="breadcrumb-item"><a href="{{ url_for(route) }}">{{ breadcrumb }}</a></li>
+                        {% endfor %}
+                        {% for active_section in active_sections %}
+                            <li class="breadcrumb-item active">{{ active_section }}</li>
+                        {% endfor %}
+                    </ol>
+                    {% block main_content %}{% endblock %}
+                </div>
+            </main>
+            {{ footer.render() }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block trail %}
+    <script src="{{ url_for("static", filename="sb-admin-6.0.2/js/scripts.js") }}" ></script>
+    <script type=”text/javascript”>
+        function addEvent(element, event, func) {
+            if (element.addEventListener) {
+                element.addEventListener(event, func, false);
+            } else {
+                element.attachEvent(“on”+event, func);
+            }}
+    </script>
+    {% block generic_scripts %}{% endblock %}
+    {% block extra_scripts %}{% endblock %}
+{% endblock %}

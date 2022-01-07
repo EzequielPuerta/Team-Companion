@@ -1,0 +1,137 @@
+{% macro header(title='', icon='', extra_styles='') %}
+    {% if title != '' %}
+        <div class="card-header {{ extra_styles }}">
+            {% if icon != '' %}
+                <i class="{{ icon }}"></i>&nbsp;{{ title }}
+            {% else %}
+                {{ title }}
+            {% endif %}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro body(contents='', icon='', extra_styles='') %}
+    {% set body_contents = caller() %}
+    <div class="card-body {{ extra_styles }}">
+        {% if contents != '' %}
+            {{ contents }}
+        {% else %}
+            {{ body_contents }}
+        {% endif %}
+        {% if icon != '' %}
+            &nbsp;<i class="{{ icon }}"></i>
+        {% endif %}
+    </div>
+{% endmacro %}
+
+{% macro footer(text='', link_path='#', text_color='black', extra_styles='') %}
+    {% set footer_contents = caller() %}
+    {% if text != '' %}
+        <div class="card-footer {{ extra_styles }}">
+            <a class="small text-{{ text_color }} stretched-link" href="{{ url_for(''~link_path) if link_path != '#' else '#' }}">{{ text }}</a>
+            <div class="small text-{{ text_color }}"><i class="fas fa-angle-right"></i></div>
+        </div>
+    {% elif footer_contents %}
+        <div class="card-footer {{ extra_styles }}">
+            {{ footer_contents }}
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro base(text_color='black', size='bg', level='', extra_styles='') %}
+    {% set base_contents = caller() %}
+    <div class="card {{ ''~size~'-'~level if level != '' else '' }} text-{{ text_color }} mb-4 {{ extra_styles }}">
+        {{ base_contents }}
+    </div>
+{% endmacro %}
+
+{% macro with_body(contents='', body_icon='', text_color='black', size='bg', level='', extra_styles='') %}
+    {% set with_body_contents = caller() %}
+    {% call base(text_color=text_color, size=size, level=level) %}
+        {% call body(contents=contents, icon=body_icon, extra_styles=extra_styles) %}
+            {{ with_body_contents }}
+        {% endcall %}
+    {% endcall %}
+{% endmacro %}
+
+{% macro header_and_body(contents='', title='', header_icon='', body_icon='', text_color='black', size='bg', level='', extra_styles='') %}
+    {% set header_and_body_contents = caller() %}
+    {% call base(text_color=text_color, size=size, level=level) %}
+        {{ header(title=title, icon=header_icon) }}
+        {% call body(contents=contents, icon=body_icon, extra_styles=extra_styles) %}
+            {{ header_and_body_contents }}
+        {% endcall %}
+    {% endcall %}
+{% endmacro %}
+
+{% macro generic(contents='', text_color='black', title='', header_icon='', body_icon='', footer_text='', footer_text_color='black', footer_link_path='#', size='bg', level='', extra_styles='') %}
+    {% set body_contents = caller() %}
+    {% call base(text_color=text_color, size=size, level=level, extra_styles=extra_styles) %}
+        {{ header(title=title, icon=header_icon) }}
+        {% call body(contents=contents, icon=body_icon) %}
+            {{ body_contents }}
+        {% endcall %}
+        {% call footer(text=footer_text, link_path=footer_link_path, text_color=footer_text_color, extra_styles='d-flex align-items-center justify-content-between') %}
+        {% endcall %}
+    {% endcall %}
+{% endmacro %}
+
+{% macro primary(contents='', text_color='white', title='', body_icon='', footer_text='', footer_link_path='#', extra_styles='') %}
+    {% call generic(
+        contents=contents, 
+        text_color=text_color, 
+        title=title, 
+        body_icon=body_icon, 
+        footer_text=footer_text, 
+        footer_text_color=text_color,
+        footer_link_path=footer_link_path, 
+        size='bg', 
+        level='primary',
+        extra_styles=extra_styles) %}
+            {% endcall %}
+{% endmacro %}
+
+{% macro warning(contents='', text_color='white', title='', body_icon='', footer_text='', footer_link_path='#', extra_styles='') %}
+    {% call generic(
+        contents=contents, 
+        text_color=text_color, 
+        title=title, 
+        body_icon=body_icon, 
+        footer_text=footer_text, 
+        footer_text_color='white',
+        footer_link_path=footer_link_path, 
+        size='bg', 
+        level='warning',
+        extra_styles=extra_styles) %}
+            {% endcall %}
+{% endmacro %}
+
+{% macro success(contents='', text_color='white', title='', body_icon='', footer_text='', footer_link_path='#', extra_styles='') %}
+    {% call generic(
+        contents=contents, 
+        text_color=text_color, 
+        title=title, 
+        body_icon=body_icon, 
+        footer_text=footer_text, 
+        footer_text_color=text_color,
+        footer_link_path=footer_link_path, 
+        size='bg', 
+        level='success',
+        extra_styles=extra_styles) %}
+            {% endcall %}
+{% endmacro %}
+
+{% macro danger(contents='', text_color='white', title='', body_icon='', footer_text='', footer_link_path='#', extra_styles='') %}
+    {% call generic(
+        contents=contents, 
+        text_color=text_color, 
+        title=title, 
+        body_icon=body_icon, 
+        footer_text=footer_text, 
+        footer_text_color=text_color,
+        footer_link_path=footer_link_path, 
+        size='bg', 
+        level='danger',
+        extra_styles=extra_styles) %}
+            {% endcall %}
+{% endmacro %}

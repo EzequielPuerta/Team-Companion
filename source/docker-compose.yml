@@ -1,0 +1,50 @@
+version: '3.7'
+
+services:
+
+  postgresql:
+    image: postgres:9.6.24
+    container_name: postgresql
+    command: postgres -c log_timezone=America/Buenos_Aires
+    restart: unless-stopped
+    ports:
+      - "${POSTGRES_HOST_PORT:-5432}:5432"
+    volumes:
+      - './postgresql_server/data/:/var/lib/postgresql/data/'
+    environment:
+      TZ: America/Buenos_Aires
+      PGTZ: America/Buenos_Aires
+      POSTGRES_USER: ${POSTGRES_USER:?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+      POSTGRES_DB: postgresql_server
+
+  team_companion:
+    container_name: team_companion
+    build:
+      context: ./kernel
+      target: production
+    ports:
+      - "${FLASK_PORT:-5050}:5000"
+    restart: unless-stopped
+    depends_on:
+      - postgresql
+    volumes:
+      - ./kernel/logs:/opt/tyke/team_companion_kernel/logs/
+      - ./postgresql_server/migrations:/opt/tyke/team_companion_kernel/migrations/
+    environment:
+      TZ: America/Buenos_Aires
+      USER_ID: ${USER_ID:?err}
+      GROUP_ID: ${GROUP_ID:?err}
+      APP_SETTINGS_MODULE: default
+      SECRET_KEY: ${SECRET_KEY:?err}
+      POSTGRES_USER: ${POSTGRES_USER:?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+      POSTGRES_DB: postgresql_server
+      POSTGRES_HOST: postgresql
+      POSTGRES_PORT: 5432
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: ${SUBNET:?err}

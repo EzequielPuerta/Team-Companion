@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+
+{% import "macros/buttons.html" as btn with context %}
+{% import "macros/cards.html" as card with context %}
+
+{% block main_content %}
+    {% call card.base(extra_styles='card-narrow mx-auto') %}
+        {{ card.header(title='Agregar '~previous_section_name, icon='fas fa-plus') }}
+        {% if error %}
+            <div class="value-errors"><strong>Error:</strong> {{ error }}</div>
+        {% endif %}
+        <form accept-charset="iso-8859-1" method="post" action="" novalidate>
+            {% call card.body() %}
+                {{ form.hidden_tag() }}
+                {% block fields %}{% endblock %}
+            {% endcall %}
+            {% call card.footer() %}
+                {% block submit %}{% endblock %}
+                {{ btn.link_button(label='Cancelar', icon='', style='secondary', is_disabled=false, href=url_for(previous_section)) }}
+            {% endcall %}
+        </form>
+    {% endcall %}
+{% endblock %}

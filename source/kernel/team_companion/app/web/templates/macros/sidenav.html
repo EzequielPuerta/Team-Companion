@@ -1,0 +1,68 @@
+{% macro render() %}
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <div class="sb-sidenav-menu-heading">Principal</div>
+                <a class="nav-link" href="{{ url_for('main.dashboard') }}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>Dashboard
+                </a>
+                <div class="sb-sidenav-menu-heading">Módulos</div>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAdministration" aria-expanded="false" aria-controls="collapseAdministration">
+                    <div class="sb-nav-link-icon"><i class="fas fa-user-cog"></i></div>Administración
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseAdministration" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{{ url_for('internal_user.dashboard') }}"><div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>Usuarios</a>
+                    </nav>
+                </div>
+                {# <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFIX" aria-expanded="false" aria-controls="collapseFIX">
+                    <div class="sb-nav-link-icon"><i class="fas fa-cogs"></i></div>FIX
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseFIX" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#fixCollapseMessages" aria-expanded="false" aria-controls="fixCollapseMessages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-envelope"></i></div>Mensajes
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="fixCollapseMessages" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="#">TestRequest</a>
+                                <a class="nav-link" href="#">ResendRequest</a>
+                                <a class="nav-link" href="#">SequenceReset</a>
+                                <a class="nav-link" href="#">UserRequest</a>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#fixCollapseAMQP" aria-expanded="false" aria-controls="fixCollapseAMQP">
+                            <div class="sb-nav-link-icon"><i class="fas fa-list-ol"></i></div>AMQP
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="fixCollapseAMQP" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="#">Queues</a>
+                                <a class="nav-link" href="#">Bindings</a>
+                                <a class="nav-link" href="#">Exchanges</a>
+                            </nav>
+                        </div>
+                    </nav>
+                </div> #}
+                {# <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLogs" aria-expanded="false" aria-controls="collapseLogs">
+                    <div class="sb-nav-link-icon"><i class="fas fa-search"></i></div>Logs
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseLogs" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="#"><div class="sb-nav-link-icon"><i class="fas fa-check"></i></div>Todo</a>
+                        <a class="nav-link" href="#"><div class="sb-nav-link-icon"><i class="fas fa-info-circle"></i></div>Info</a>
+                        <a class="nav-link" href="#"><div class="sb-nav-link-icon"><i class="fas fa-bug"></i></div>Errores</a>
+                    </nav>
+                </div> #}
+            </div>
+        </div>
+        <div class="sb-sidenav-footer">
+            <div class="small">Conectado desde:</div>
+            {{ connection_time }}
+        </div>
+    </nav>
+{% endmacro %}

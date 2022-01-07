@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block head_links %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="mercap-fix-1.0.0/css/mercap-bootstrap.css") }}" />
+{% endblock %}
+
+{% block content %}
+    <form accept-charset="iso-8859-1" method="post" action="" class="sign-in" novalidate>
+        <div class="sign-in">
+            <img alt="" src="{{ url_for("static", filename="mercap-fix-1.0.0/images/mercap_symbol.svg") }}" class="symbol"
+                onerror="this.src=&quot;{{ url_for("static", filename="mercap-fix-1.0.0/images/mercap_symbol.png") }}&quot;" />
+            <img alt="" src="{{ url_for("static", filename="mercap-fix-1.0.0/images/mercap_logotype_in_theme_text_color.svg") }}" class="logotype"
+                onerror="this.src=&quot;{{ url_for("static", filename="mercap-fix-1.0.0/images/mercap_logotype_in_theme_text_color.png") }}&quot;" />
+        </div>
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.username.label(class="control-label") }}
+            {{ form.username(size=64, class="form-control") }}
+            {% for error in form.username.errors %}
+                <span class="value-errors">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.password.label(class="control-label") }}
+            {{ form.password(class="form-control") }}
+            {% for error in form.password.errors %}
+                <span class="value-errors">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.remember_me() }} {{ form.remember_me.label }}
+        </div>
+        {{ form.submit(class="btn btn-primary btn-block") }}
+    </form>
+    <div class="application-footer-container">
+        <div class="application-footer">
+            <ul class="application-footer-links pull-right">
+                <li class="application-footer-link">Mercap - Team Companion</li>
+                <li class="application-footer-link">V. {{ version }}</li>
+            </ul>
+            <ul class="application-footer-links">
+                <li class="application-footer-link">&copy;&nbsp;{{ current_year }}</li>
+                <li class="application-footer-link">Mercap Software</li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% macro render_field(field) %}
+    <div class="form-group">
+        {{ field.label(class="control-label") }}
+        {{ field(class="form-control", **kwargs) | safe }}
+        {% for error in field.errors %}
+            <span class="value-errors">{{ error }}</span>
+        {% endfor %}
+    </div>
+{% endmacro %}
+
+{% macro render_checkbox(field) %}
+    <div class="form-group">
+        {{ field() }} {{ field.label }}
+    </div>
+{% endmacro %}

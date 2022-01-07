@@ -1,0 +1,14 @@
+{% macro render() %}
+    <footer class="py-4 bg-light mt-auto">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="text-muted">&copy;&nbsp;{{ current_year }} Mercap Software</div>
+                <div class="text-muted">
+                    <span>Mercap - Team Companion</span>
+                    &middot;
+                    <span href="#">V. {{ version }}</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endmacro %}

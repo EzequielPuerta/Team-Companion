@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+
+  postgresql_test:
+    image: postgres:9.6.24
+    container_name: postgresql_test
+    command: postgres -c log_timezone=America/Buenos_Aires
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      TZ: America/Buenos_Aires
+      PGTZ: America/Buenos_Aires
+      POSTGRES_USER: ${POSTGRES_USER:?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+      POSTGRES_DB: test_postgresql_server
+    networks:
+      default:
+        ipv4_address: 10.40.17.68
+    logging:
+      driver: "none"
+
+  team_companion:
+    container_name: team_companion
+    build:
+      context: ./kernel
+      target: testing
+    ports:
+      - "${FLASK_PORT:-5050}:5000"
+      - 5678:5678
+    depends_on:
+      - postgresql_test
+    volumes:
+      - ./kernel/logs:/opt/tyke/team_companion_kernel/logs/
+      - ./postgresql_server/migrations:/opt/tyke/team_companion_kernel/migrations/
+    environment:
+      TZ: America/Buenos_Aires
+      USER_ID: ${USER_ID:?err}
+      GROUP_ID: ${GROUP_ID:?err}
+      APP_SETTINGS_MODULE: testing
+      POSTGRES_USER: ${POSTGRES_USER:?err}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
+      POSTGRES_DB: test_postgresql_server
+      POSTGRES_HOST: postgresql_test
+      POSTGRES_PORT: 5432
+    networks:
+      default:
+        ipv4_address: 10.40.17.69
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.40.17.64/26

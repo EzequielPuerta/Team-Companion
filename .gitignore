@@ -1,0 +1,8 @@
+.vscode
+__pycache__/
+*.pyc
+
+source/postgresql_server/data/*
+!source/postgresql_server/data/.gitkeep
+
+source/.env

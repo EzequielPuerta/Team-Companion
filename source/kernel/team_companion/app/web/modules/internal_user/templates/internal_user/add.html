@@ -1,0 +1,17 @@
+{% extends "crud/add.html" %}
+
+{% import "macros/forms.html" as forms %}
+
+{% set active_sections = ['Agregar'] %}
+{% set breadcrumbs = [('Dashboard','main.dashboard'), ('Usuarios','internal_user.dashboard')] %}
+
+{% block fields %}
+    {{ forms.render_field(form.username, size=64) }}
+    {{ forms.render_field(form.password) }}
+    {{ forms.render_field(form.confirm) }}
+    {{ forms.render_checkbox(form.is_admin) }}
+{% endblock %}
+
+{% block submit %}
+    {{ form.submit(class="btn btn-primary") }}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% import "macros/tools.html" as tools with context %}
+
+{% macro button(label='', icon='') %}
+    <button type="button" {{ tools.expand(**kwargs) }}>
+        {% if icon != '' %}
+            <i class="{{ icon }}"></i>
+        {% endif %}
+        {% if icon != '' and label != '' %}
+            &nbsp;
+        {% endif %}
+        {% if label != '' %}
+            {{ label }}
+        {% endif %}
+    </button>
+{% endmacro %}
+
+{% macro link_button(label='', icon='', style='primary', is_disabled=false, extra_styles='') %}
+    <a {{ tools.expand(**kwargs) }}
+        role="button" 
+        class="btn btn-{{ style }} {{ 'disabled' if is_disabled }} {{ extra_styles }}">
+        {% if icon != '' %}
+            <i class="{{ icon }}"></i>
+        {% endif %}
+        {% if icon != '' and label != '' %}
+            &nbsp;
+        {% endif %}
+        {% if label != '' %}
+            {{ label }}
+        {% endif %}
+    </a>
+{% endmacro %}

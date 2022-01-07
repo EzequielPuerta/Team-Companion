@@ -14,7 +14,7 @@ services:
       PGTZ: America/Buenos_Aires
       POSTGRES_USER: ${POSTGRES_USER:?err}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
-      POSTGRES_DB: test_server
+      POSTGRES_DB: test_postgresql_server
     networks:
       default:
         ipv4_address: 10.40.17.68
@@ -41,7 +41,7 @@ services:
       APP_SETTINGS_MODULE: testing
       POSTGRES_USER: ${POSTGRES_USER:?err}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
-      POSTGRES_DB: test_server
+      POSTGRES_DB: test_postgresql_server
       POSTGRES_HOST: postgresql_test
       POSTGRES_PORT: 5432
     networks:

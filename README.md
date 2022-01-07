@@ -13,7 +13,7 @@
 
 3. Ejecutar algún archivo `.yml`, por ejemplo:
 
-    I. el default
+    I. el default (recomendado para la primera vez)
     > `docker-compose up --build`
     
     que es igual a:
@@ -28,6 +28,22 @@
     > `docker-compose -f docker-compose-debug.yml up --build`
 
 4. Si se desea ejecutar el aplicativo en segundo plano (*background*), se debe agregar el *flag* `-d` a cualquiera de los comandos antes mencionados.
+
+5. La primera vez, será necesario crear la base de datos con todas sus tablas. Para ello hay que ejecutar lo siguiente:
+
+    > `docker exec -it team_companion /bin/bash`
+    > `python`
+    > `from team_companion.app import create_app`
+    > `from team_companion.app.extensions import db`
+    > `rootsystem = create_app()`
+    > `db.app = rootsystem`
+    > `db.create_all()`
+    > `exit()`
+    > `exit`
+
+6. Acceder (por default) al siguiente [link](http://10.40.17.3:5000/)
+
+7. En el primer ingreso, el usuario (y su contraseña) que se ingrese, se registrará como administrador.
 
 ## Notas
 

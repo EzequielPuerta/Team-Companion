@@ -39,7 +39,7 @@ services:
       SECRET_KEY: ${SECRET_KEY:?err}
       POSTGRES_USER: ${POSTGRES_USER:?err}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err}
-      POSTGRES_DB: mcp_postgresql_server
+      POSTGRES_DB: postgresql_server
       POSTGRES_HOST: postgresql
       POSTGRES_PORT: 5432
 

@@ -59,7 +59,7 @@
 
 > `docker cp db-setup.py team_companion_team_companion_1:/opt/tyke/team_companion_kernel/ && docker exec -it team_companion_team_companion_1 bash -c "python -m db-setup"`
 
-> **Importante:** Al correr los tests, la primera vez puede fallar porque el contenedor principal no encuentra la base de datos para test...
+> **Importante:** Al correr los tests, la primera vez puede fallar porque el contenedor principal no encuentra la base de datos para test. Intentarlo una segunda vez.
 
 ## Documentación
 

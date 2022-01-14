@@ -5,5 +5,5 @@ __pycache__/
 source/postgresql_server/data/*
 !source/postgresql_server/data/.gitkeep
 
-source/kernel/logs
+source/kernel/logs/*
 source/.env

@@ -20,6 +20,7 @@ RUN pip install \
     psycopg2~=2.8.6 \
     python-dateutil~=2.8 \
     pytz~=2020.4 \
+    requests~=2.27.1 \
     ;
 
 ENV TEAM_COMPANION_PATH /opt/tyke/team_companion_kernel

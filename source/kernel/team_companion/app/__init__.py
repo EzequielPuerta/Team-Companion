@@ -23,5 +23,6 @@ def register_blueprints(root_system):
     root_system.register_blueprint(modules.auth.auth)
     root_system.register_blueprint(modules.internal_user.internal_user)
     root_system.register_blueprint(modules.lock.lock)
+    root_system.register_blueprint(modules.log_time.log_time)
     root_system.register_blueprint(modules.main.main)
     root_system.register_blueprint(modules.version.version)

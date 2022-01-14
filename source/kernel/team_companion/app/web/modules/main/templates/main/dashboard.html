@@ -1,11 +1,26 @@
 {% extends "index.html" %}
+{% import "macros/tables.html" as table %}
+{% import "macros/cards.html" as card with context %}
 
 {% set active_sections = ["Dashboard"] %}
 {% set breadcrumbs = [] %}
-
-{% import "macros/cards.html" as card with context %}
+{% set columns = ['Usuario', 'Nombre', 'Período', 'Horas Diarias', 'Redmine', 'Trabajado', 'Requerido', 'Req. Período'] %}
 
 {% block main_content %}
+    {% block table_wrapper %}
+        {% call(log_time) table.populate(name='Horas cargadas', rows=log_times, row_id='log_time',
+            columns=columns, table_id=section_name) %}
+                {{ table.cell(log_time.username) }}
+                {{ table.cell(log_time.display_name) }}
+                {{ table.cell(log_time.period) }}
+                {{ table.cell(log_time.hours_per_day) }}
+                {{ table.cell(log_time.worked_redmine) }}
+                {{ table.cell(log_time.worked) }}
+                {{ table.cell(log_time.required) }}
+                {{ table.cell(log_time.required_period) }}
+        {% endcall %}
+    {% endblock %}
+
     {% for parameter in parameters %}
         {% call card.header_and_body(title=parameter~" (largo: "~parameter|length~")") %}
             <div class="row">

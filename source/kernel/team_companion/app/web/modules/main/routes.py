@@ -10,7 +10,7 @@ from flask_login import login_required
 @login_required
 def dashboard():
     data = {}
-    data["letters"] = ["a", "bb", "ccc"]
+    data["log_times"] = root_system.log_time_system.select_all()
     return render_template_with_sidebar("main/dashboard.html", **data)
 
 @main.route("/events/")

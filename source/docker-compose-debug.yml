@@ -43,6 +43,7 @@ services:
       POSTGRES_DB: postgresql_server
       POSTGRES_HOST: postgresql
       POSTGRES_PORT: 5432
+      DEBUGGING_ENABLED: 'true'
 
 networks:
   default:

@@ -6,6 +6,7 @@ port = 5000
 accepted_hosts = {"localhost"}
 current_timezone = "America/Buenos_Aires"
 secret_key = os.environ["SECRET_KEY"]
+debugging_enabled = True if os.environ["DEBUGGING_ENABLED"] == 'true' else False
 settings_module = f"team_companion.conf.{os.getenv('APP_SETTINGS_MODULE')}"
 
 # POSTGRESQL
